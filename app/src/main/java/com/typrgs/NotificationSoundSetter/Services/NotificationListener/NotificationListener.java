@@ -1,99 +1,67 @@
 package com.typrgs.NotificationSoundSetter.Services.NotificationListener;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
+import android.app.Notification;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+import com.typrgs.NotificationSoundSetter.Models.SoundMapping;
+import com.typrgs.NotificationSoundSetter.Services.SoundMappingManager.SoundMappingManager;
 
-import com.typrgs.NotificationSoundSetter.Models.NotificationSound;
-import com.typrgs.NotificationSoundSetter.Services.NotificationSoundManager.DefaultSoundManager;
-import com.typrgs.NotificationSoundSetter.Services.NotificationSoundManager.NotificationSoundManager;
+public class NotificationListener extends NotificationListenerService {
+    private MediaPlayer player;
+    private SoundMappingManager soundManager;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class NotificationListener extends NotificationListenerService
-{
-    private static final String TAG = "NotificationListener";
-    private static final String INSTAGRAM = "instagram";
-    private static final String ANDROID_TITLE_KEY = "android.title";
-    private static final String ANDROID_TEXT_KEY = "android.text";
-    private static final String INSTA_NOTIF_TYPE_KEY = "com.instagram.android.igns.logging.collapse_key";
-
-    private static final String[] SPECIAL_SOUND_TAGS = { "baby", "hannahmdao"};
-
-    private NotificationSoundManager soundManager;
-
-    @Override
-    public void onCreate()
-    {
+    @Override public void onCreate() {
         super.onCreate();
-
-        this.soundManager = new DefaultSoundManager(this);
-        List<NotificationSound> sounds = this.soundManager.getAvailableNotificationSounds();
-
-        for (NotificationSound sound : sounds)
-        {
-            if (sound.getTitle().equalsIgnoreCase("android.resource://com.google.android.soundpicker/string/bubble"))
-            {
-                for (String tag : SPECIAL_SOUND_TAGS)
-                {
-                    this.soundManager.registerSoundMapping(tag, sound.getUri());
-                }
-            }
-            else if (sound.getTitle().equalsIgnoreCase("red dwarf"))
-            {
-                this.soundManager.registerSoundMapping(INSTAGRAM, sound.getUri());
-            }
-        }
-
-        Log.d(TAG, "Listener created");
+        soundManager = new SoundMappingManager(this);
     }
 
-    @Override
-    public void onListenerConnected()
-    {
-        super.onListenerConnected();
-        Log.d(TAG, "Listener connected");
+    @Override public void onNotificationPosted(StatusBarNotification sbn) {
+        Notification notification = sbn.getNotification();
+        if ((notification.flags & Notification.FLAG_GROUP_SUMMARY) != 0) return;
+        Bundle extras = notification.extras;
+        CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
+        CharSequence body = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
+        if (body == null) body = extras.getCharSequence(Notification.EXTRA_TEXT);
+        SoundMapping mapping = soundManager.findMatch(sbn.getPackageName(), title, body);
+        if (mapping != null) play(Uri.parse(mapping.soundUri));
     }
 
-    @Override
-    public void onNotificationPosted(StatusBarNotification sbn)
-    {
-        String packageName = sbn.getPackageName();
-
+    private void play(Uri uri) {
+        releasePlayer();
+        MediaPlayer next = new MediaPlayer();
+        player = next;
         try {
-            PackageManager pm = getPackageManager();
-            ApplicationInfo appInfo = pm.getApplicationInfo(packageName, 0);
-            Bundle notifBundle = sbn.getNotification().extras;
-
-            String appName = pm.getApplicationLabel(appInfo).toString();
-            String notifType = notifBundle.getString(INSTA_NOTIF_TYPE_KEY);
-
-//            for(String key : notifBundle.keySet())
-//            {
-//                Log.d(TAG, key + ": " + notifBundle.get(key));
-//            }
-
-            if (appName.equalsIgnoreCase(INSTAGRAM) && notifType != null && notifType.contains("message"))
-            {
-
-                String notifTitle = notifBundle.getString(ANDROID_TITLE_KEY);
-                Log.d(TAG, "Instagram notification posted: " + notifTitle);
-                if (notifTitle != null && Arrays.stream(SPECIAL_SOUND_TAGS).anyMatch(notifTitle::equalsIgnoreCase))
-                {
-                    this.soundManager.playNotificationSound(this, notifTitle);
-                }
-                else
-                {
-                    this.soundManager.playNotificationSound(this, INSTAGRAM);
-                }
-            }
-
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "App not found: " + packageName, e);
+            next.setAudioAttributes(new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build());
+            next.setDataSource(this, uri);
+            next.setOnPreparedListener(MediaPlayer::start);
+            next.setOnCompletionListener(p -> releasePlayer());
+            next.setOnErrorListener((p, what, extra) -> {
+                releasePlayer();
+                return true;
+            });
+            next.prepareAsync();
+        } catch (Exception e) {
+            Log.w("NotificationListener", "Could not play mapped sound", e);
+            releasePlayer();
         }
+    }
+
+    private void releasePlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
+    @Override public void onDestroy() {
+        releasePlayer();
+        super.onDestroy();
     }
 }

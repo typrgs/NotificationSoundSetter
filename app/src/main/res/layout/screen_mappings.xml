@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/UiColumn"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/mapping_count"
+        style="@style/UiHeading"
+        android:textSize="21sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/new_mapping"
+        style="@style/UiPrimaryButton"
+        android:text="@string/new_mapping" />
+    <TextView
+        android:id="@+id/empty_mappings"
+        style="@style/UiMuted"
+        android:text="@string/empty_mappings"
+        android:background="@drawable/card_background"
+        android:padding="18dp"
+        android:layout_marginTop="24dp" />
+    <LinearLayout
+        android:id="@+id/mapping_list"
+        style="@style/UiColumn">
+    </LinearLayout>
+    <TextView
+        style="@style/UiHelp"
+        android:text="@string/matching_help"
+        android:layout_marginTop="20dp" />
+</LinearLayout>

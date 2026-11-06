@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/home"
+    style="@style/UiColumn"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        style="@style/UiHeading"
+        android:text="@string/app_name" />
+    <LinearLayout
+        style="@style/UiCard"
+        android:layout_marginTop="24dp">
+        <TextView
+            android:id="@+id/notification_status"
+            style="@style/UiText" />
+        <TextView
+            android:id="@+id/notification_explanation"
+            style="@style/UiMuted"
+            android:text="@string/notification_explanation" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/enable_notification"
+            style="@style/UiButton"
+            android:text="@string/enable_notification" />
+    </LinearLayout>
+    <LinearLayout
+        style="@style/UiCard"
+        android:layout_marginTop="12dp">
+        <TextView
+            android:id="@+id/battery_status"
+            style="@style/UiText" />
+        <TextView
+            android:id="@+id/battery_explanation"
+            style="@style/UiMuted"
+            android:text="@string/battery_explanation" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ignore_battery"
+            style="@style/UiButton"
+            android:text="@string/ignore_battery" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mappings_tab"
+            style="@style/UiTab"
+            android:text="@string/mappings" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sounds_tab"
+            style="@style/UiTab"
+            android:text="@string/sounds" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/page_content"
+        style="@style/UiColumn"
+        android:layout_marginTop="24dp">
+    </LinearLayout>
+</LinearLayout>

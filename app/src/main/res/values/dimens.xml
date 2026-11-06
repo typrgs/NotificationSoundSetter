@@ -1,0 +1,3 @@
+<resources>
+    <item name="content_width" type="dimen" format="integer">-1</item>
+</resources>
