@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/UiColumn"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/back"
+        style="@style/UiButton"
+        android:text="@string/back" />
+    <TextView
+        style="@style/UiHeading"
+        android:text="@string/sound_mapping"
+        android:textSize="30sp"
+        android:layout_marginTop="12dp" />
+    <TextView
+        style="@style/UiSection"
+        android:text="@string/application_section"
+        android:layout_marginTop="24dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/choose_app"
+        style="@style/UiButton"
+        android:text="@string/choose_app" />
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/any_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp"
+        android:textColor="@color/ui_ink"
+        android:text="@string/any_notification"
+        android:saveEnabled="false" />
+    <TextView
+        android:id="@+id/fallback_help"
+        style="@style/UiHelp"
+        android:text="@string/fallback_help" />
+    <LinearLayout
+        android:id="@+id/keyword_fields"
+        style="@style/UiColumn">
+        <TextView
+            style="@style/UiSection"
+            android:text="@string/keywords_section" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/UiKeywordLayout"
+            android:hint="@string/title_keywords">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/title_keywords"
+                style="@style/UiKeywordInput" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/UiKeywordLayout"
+            android:hint="@string/body_keywords">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/body_keywords"
+                style="@style/UiKeywordInput" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            style="@style/UiHelp"
+            android:text="@string/keywords_help" />
+    </LinearLayout>
+    <TextView
+        style="@style/UiSection"
+        android:text="@string/sound_section"
+        android:layout_marginTop="24dp" />
+    <TextView
+        android:id="@+id/selected_sound"
+        style="@style/UiHeading"
+        android:text="@string/no_sound"
+        android:textSize="18sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/choose_sound"
+        style="@style/UiButton"
+        android:text="@string/choose_sound" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/preview_sound"
+        style="@style/UiButton"
+        android:text="@string/preview_sound" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_mapping"
+        style="@style/UiPrimaryButton"
+        android:text="@string/save_mapping"
+        android:layout_marginTop="28dp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_mapping"
+        style="@style/UiButton"
+        android:text="@string/delete_mapping" />
+</LinearLayout>

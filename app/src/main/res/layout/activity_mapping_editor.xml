@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/editor_scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/ui_paper">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            style="@style/UiColumn"
+            android:layout_width="@dimen/content_width"
+            android:layout_gravity="center_horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="24dp">
+            <include
+                android:id="@+id/editor_content"
+                layout="@layout/screen_mapping_editor" />
+        </LinearLayout>
+    </FrameLayout>
+</ScrollView>
