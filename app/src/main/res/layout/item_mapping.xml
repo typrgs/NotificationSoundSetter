@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/UiCard"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="12dp">
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/mapping_enabled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:textSize="17sp"
+        android:textColor="@color/ui_ink"
+        android:saveEnabled="false" />
+    <TextView
+        android:id="@+id/mapping_fallback"
+        style="@style/UiText"
+        android:text="@string/fallback_label" />
+    <TextView
+        android:id="@+id/mapping_title"
+        style="@style/UiText" />
+    <TextView
+        android:id="@+id/mapping_body"
+        style="@style/UiMuted" />
+    <TextView
+        android:id="@+id/mapping_sound"
+        style="@style/UiMuted" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit_mapping"
+        style="@style/UiButton"
+        android:text="@string/edit_mapping" />
+</LinearLayout>

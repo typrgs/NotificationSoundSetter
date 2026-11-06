@@ -1,0 +1,7 @@
+<resources>
+    <color name="ui_ink">#F3F3F3</color>
+    <color name="ui_muted">#AAAAAA</color>
+    <color name="ui_paper">#111111</color>
+    <color name="ui_surface">#1D1D1D</color>
+    <color name="ui_border">#393939</color>
+</resources>

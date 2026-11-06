@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/UiColumn"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/sound_count"
+        style="@style/UiHeading"
+        android:textSize="21sp" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/import_sound"
+        style="@style/UiPrimaryButton"
+        android:text="@string/import_sound" />
+    <TextView
+        android:id="@+id/empty_sounds"
+        style="@style/UiMuted"
+        android:text="@string/empty_sounds"
+        android:background="@drawable/card_background"
+        android:padding="18dp"
+        android:layout_marginTop="24dp" />
+    <LinearLayout
+        android:id="@+id/sound_list"
+        style="@style/UiColumn">
+    </LinearLayout>
+</LinearLayout>
