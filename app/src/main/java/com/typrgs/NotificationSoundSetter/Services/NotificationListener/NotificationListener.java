@@ -20,9 +20,14 @@ public class NotificationListener extends NotificationListenerService {
         soundManager = new SoundMappingManager(this);
     }
 
-    @Override public void onNotificationPosted(StatusBarNotification sbn) {
+    @Override public void onNotificationPosted(StatusBarNotification sbn, RankingMap rankingMap) {
         Notification notification = sbn.getNotification();
         if ((notification.flags & Notification.FLAG_GROUP_SUMMARY) != 0) return;
+
+        Ranking ranking = new Ranking();
+        if (rankingMap == null || !rankingMap.getRanking(sbn.getKey(), ranking)
+                || !ranking.matchesInterruptionFilter()) return;
+
         Bundle extras = notification.extras;
         CharSequence title = extras.getCharSequence(Notification.EXTRA_TITLE);
         CharSequence body = extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
